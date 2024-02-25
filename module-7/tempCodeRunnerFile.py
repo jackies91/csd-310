@@ -1,1 +1,1 @@
-print("--DISPLAYING  RECORDS--")
+print("--DISPLAYING {} RECORDS--".format(studio_name))
