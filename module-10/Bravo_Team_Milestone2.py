@@ -18,13 +18,13 @@ print("--DISPLAYING {} RECORDS--".format(assets_name))
 cursor.execute("SELECT * FROM Assets")
 asset = cursor.fetchall()
 for row in asset:
-    print("Asset ID: {}\nAsset Type: {}\nAsset Value: {}\nClient ID: {}\n".format(row[0], row[1], row[2], row[3]))
+    print("Asset ID: {}\nAsset Type: {}\n".format(row[0], row[1]))
 
 
 clients_name = "Client"
 print("--DISPLAYING {} RECORDS--".format(clients_name))
 
-cursor.execute("SELECT * FROM client")
+cursor.execute("SELECT * FROM clients")
 client = cursor.fetchall()
 for row in client:
     print("Client ID: {}\nClient Name: {}\nClient Address: {}\nClient Phone: {}\nClient Email: {}\nClient Since: {}\n".format(row[0], row[1], row[2], row[3], row[4], row[5]))
@@ -36,7 +36,7 @@ print("--DISPLAYING {} RECORDS--".format(transactions_name))
 cursor.execute("SELECT * FROM transactions")
 transaction = cursor.fetchall()
 for row in transaction:
-    print("Transaction ID: {}\nTransaction Date: {}\nInvoice Number: {}\nClient ID: {}\nAsset ID: {}\n".format(row[0], row[1], row[2], row[3], row[4]))
+    print("Transaction ID: {}\nTransaction Date: {}\nInvoice Number: {}\nClient ID: {}\nAsset ID: {}\nAsset Value: {}\n".format(row[0], row[1], row[2], row[3], row[4], row[5]))
 
 
 
