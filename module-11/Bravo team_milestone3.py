@@ -1,9 +1,12 @@
+#team Bravo - Milestone 3 
+#Module 12.2 changing the assets report
 # report1: Average assets
 # report2: customers with more than 10 transactions
 # report3: New customers obtained with last 6 months
 
 from datetime import date
 today = date.today()
+
 
 import mysql.connector
 from mysql.connector import errorcode
@@ -21,14 +24,37 @@ cursor = db.cursor()
 
 #average assets report
 avg_assets = "Average Assets"
-print("--{} Managed by Willson Financial--".format(avg_assets))
+print("--{} Managed by Willson Financial--\n".format(avg_assets))
+print("** Report Generated On: ", today, "**\n")
 
-cursor.execute("SELECT AVG (asset_value) FROM transactions")
-avg_asset_value = cursor.fetchone()[0] 
-formatted_avg_asset_value = "${:,.2f}".format(avg_asset_value)
-print("Assets Value:", formatted_avg_asset_value)
-print("**Report Generated On: ",today, "**")
+# Execute a query to calculate the overall average of all assets
+cursor.execute("SELECT AVG(asset_value) FROM transactions")
+overall_avg_asset_value = cursor.fetchone()[0]
+formatted_overall_avg_asset_value = "${:,.2f}".format(overall_avg_asset_value)
+print("Overall Average Asset Value: {}\n".format(formatted_overall_avg_asset_value))
+
+# Execute a query to get the average value of each asset type
+cursor.execute("SELECT Asset_Type, AVG(asset_value) AS AvgAssetValue FROM transactions t JOIN assets a ON t.Asset_ID = a.Asset_ID GROUP BY Asset_Type")
+avg_assets_breakdown = cursor.fetchall()
+
+# Prepare data for tabulation
+asset_data = []
+for asset_type, avg_asset_value in avg_assets_breakdown:
+    formatted_avg_asset_value = "${:,.2f}".format(avg_asset_value)
+    asset_data.append([asset_type, formatted_avg_asset_value])
+
+# Import the tabulate module
+from tabulate import tabulate
+
+# Define the headers
+head = ["Asset Type", "Average Value"]
+
+# Display the table using the tabulate module
+print(tabulate(asset_data, headers=head, tablefmt="grid"))
+
 print("\n")
+
+
 
 #customers with more than 10 transactions 
 customer_transaction = "Customers with more than 10 transactions"
